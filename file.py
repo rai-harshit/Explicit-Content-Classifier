@@ -29,7 +29,7 @@ for k in range(len(abc)):
                 rep=''
                 for i in range(k):
                     rep=rep+'*'
-                    filedata = filedata.replace(word,rep)
+                filedata = filedata.replace(word,rep)
         
 with open('/home/vish_master/abc.txt', 'w') as file:
   file.write(filedata)  
