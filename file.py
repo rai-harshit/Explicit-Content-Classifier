@@ -1,4 +1,5 @@
 import requests
+from nltk import sent_tokenize
 import json
 def score(a):
     b={}
@@ -15,18 +16,20 @@ def score(a):
     data=json.loads(response.text)
     prob=data['attributeScores']['TOXICITY']['spanScores'][0]['score']['value']
     return prob
-
 with open('/home/vish_master/abc.txt', 'r') as file :
     filedata =file.read()
-f= open('/home/vish_master/abc.txt')
-for word in f.read().split():
-    prob=score(word)
+abc=sent_tokenize(filedata)
+for k in range(len(abc)):
+    prob=score(abc[k])
     if(prob>0.75):
-        k=len(word)
-        rep=''
-        for i in range(k):
-            rep=rep+'*'
-        filedata = filedata.replace(word,rep)
+        for word in abc[k].split():
+            prob=score(word)
+            if(prob>0.75):
+                k=len(word)
+                rep=''
+                for i in range(k):
+                    rep=rep+'*'
+                    filedata = filedata.replace(word,rep)
         
 with open('/home/vish_master/abc.txt', 'w') as file:
   file.write(filedata)  
